@@ -4,7 +4,7 @@
  */
 
 import { useState, useRef } from 'react'
-import { Upload, FileText, Code, CheckCircle, Loader2, FileCode, ArrowRight } from 'lucide-react'
+import { Upload, FileText, Code, CheckCircle, Loader2, ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { DragDropUpload } from '../common/DragDropUpload'
 import { ProgressIndicator } from '../common/ProgressIndicator'
@@ -60,18 +60,10 @@ export function ImportSection({ onImport }: ImportSectionProps) {
     {
       value: 'json' as ImportFormat,
       label: 'JSON',
-      description: 'JSON 格式的书签数据',
+      description: 'TMarks 标准格式，包含完整数据',
       icon: Code,
       extensions: ['.json'],
-      recommended: false
-    },
-    {
-      value: 'markdown' as ImportFormat,
-      label: 'Markdown',
-      description: 'Markdown 格式的书签列表',
-      icon: FileCode,
-      extensions: ['.md', '.markdown'],
-      recommended: false
+      recommended: true
     }
   ]
 

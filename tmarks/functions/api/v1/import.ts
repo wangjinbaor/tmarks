@@ -16,7 +16,6 @@ import type {
 
 import { createHtmlParser } from '../../lib/import-export/parsers/html-parser'
 import { createJsonParser } from '../../lib/import-export/parsers/json-parser'
-import { createMarkdownParser } from '../../lib/import-export/parsers/markdown-parser'
 import { DEFAULT_IMPORT_OPTIONS } from '../../../shared/import-export-types'
 
 interface ImportRequest {
@@ -117,11 +116,6 @@ async function parseImportData(format: ImportFormat, content: string) {
       return await htmlParser.parse(content)
     }
 
-    case 'markdown': {
-      const markdownParser = createMarkdownParser()
-      return await markdownParser.parse(content)
-    }
-
     case 'json':
     case 'tmarks': {
       const jsonParser = createJsonParser()
@@ -141,11 +135,6 @@ async function validateImportData(format: ImportFormat, data: any) {
     case 'html': {
       const htmlParser = createHtmlParser()
       return await htmlParser.validate(data)
-    }
-
-    case 'markdown': {
-      const markdownParser = createMarkdownParser()
-      return await markdownParser.validate(data)
     }
 
     case 'json':
