@@ -1,0 +1,191 @@
+/**
+ * 基础主题变量
+ * 
+ * 定义所有主题共享的变量结构和默认值
+ * 各主题只需覆盖需要修改的值
+ */
+
+:root {
+  /* ========================================
+   * 核心语义变量
+   * ======================================== */
+  --background: oklch(0.98 0 0);
+  --foreground: oklch(0.15 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0 0);
+  --popover: oklch(0.98 0 0);
+  --popover-foreground: oklch(0.15 0 0);
+  --primary: oklch(0.55 0.2 250);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0 0);
+  --secondary-foreground: oklch(0.15 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.45 0 0);
+  --accent: oklch(0.94 0 0);
+  --accent-foreground: oklch(0.15 0 0);
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.92 0 0);
+  --ring: oklch(0.55 0.2 250);
+
+  /* ========================================
+   * 图表颜色
+   * ======================================== */
+  --chart-1: oklch(0.7 0.15 200);
+  --chart-2: oklch(0.6 0.18 260);
+  --chart-3: oklch(0.65 0.15 140);
+  --chart-4: oklch(0.75 0.12 60);
+  --chart-5: oklch(0.55 0.2 320);
+
+  /* ========================================
+   * 侧边栏
+   * ======================================== */
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  /* ========================================
+   * 字体
+   * ======================================== */
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* ========================================
+   * 圆角和间距
+   * ======================================== */
+  --radius: 0.5rem;
+  --spacing: 0.25rem;
+
+  /* ========================================
+   * 阴影
+   * ======================================== */
+  --shadow-color: oklch(0 0 0);
+  --shadow-opacity: 0.1;
+  --shadow-2xs: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1);
+  --shadow: 0 1px 3px 0 oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.1), 0 8px 10px -6px oklch(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.25);
+
+  /* ========================================
+   * iOS 风格组件（ActionSheet, ConfirmModal）
+   * ======================================== */
+  --ios-sheet-bg: oklch(0.22 0 0 / 0.95);
+  --ios-sheet-bg-solid: oklch(0.22 0 0);
+  --ios-action-primary: oklch(0.6 0.18 250);
+  --ios-action-danger: oklch(0.6 0.22 25);
+  --ios-text-primary: oklch(1 0 0);
+  --ios-text-secondary: oklch(1 0 0 / 0.7);
+  --ios-text-muted: oklch(1 0 0 / 0.5);
+  --ios-divider: oklch(1 0 0 / 0.1);
+  --ios-hover: oklch(1 0 0 / 0.05);
+  --ios-active: oklch(1 0 0 / 0.1);
+
+  /* ========================================
+   * 滚动条
+   * ======================================== */
+  --tab-scrollbar-thumb: oklch(0.6 0 0 / 0.3);
+  --tab-scrollbar-thumb-hover: oklch(0.5 0 0 / 0.5);
+
+  /* ========================================
+   * 通用表面和文本
+   * ======================================== */
+  --tab-surface: var(--card);
+  --tab-surface-muted: var(--muted);
+  --tab-text: var(--foreground);
+  --tab-text-muted: var(--muted-foreground);
+  --tab-border: var(--border);
+  --tab-border-strong: var(--input);
+  --tab-overlay: oklch(0 0 0 / 0.4);
+
+  /* ========================================
+   * 消息/提示样式
+   * ======================================== */
+  --tab-message-info-bg: oklch(0.95 0.02 250);
+  --tab-message-info-border: oklch(0.85 0.08 250);
+  --tab-message-info-icon-bg: oklch(0.9 0.06 250);
+  --tab-message-info-icon: oklch(0.5 0.2 250);
+
+  --tab-message-success-bg: oklch(0.95 0.03 160);
+  --tab-message-success-border: oklch(0.85 0.1 160);
+  --tab-message-success-icon-bg: oklch(0.9 0.08 160);
+  --tab-message-success-icon: oklch(0.55 0.15 160);
+
+  --tab-message-warning-bg: oklch(0.95 0.04 85);
+  --tab-message-warning-border: oklch(0.88 0.12 85);
+  --tab-message-warning-icon-bg: oklch(0.92 0.1 85);
+  --tab-message-warning-icon: oklch(0.65 0.18 60);
+
+  --tab-message-danger-bg: oklch(0.95 0.03 25);
+  --tab-message-danger-border: oklch(0.85 0.1 25);
+  --tab-message-danger-icon-bg: oklch(0.9 0.08 25);
+  --tab-message-danger-icon: oklch(0.5 0.2 25);
+
+  /* ========================================
+   * 标签选择
+   * ======================================== */
+  --tab-tag-selected-bg: var(--tab-message-success-bg);
+  --tab-tag-selected-text: var(--tab-message-success-icon);
+  --tab-tag-unselected-bg: var(--tab-surface);
+  --tab-tag-unselected-text: var(--tab-text);
+  --tab-tag-border: var(--tab-border);
+  --tab-tag-new-indicator: var(--tab-message-warning-icon);
+}
+
+/* ========================================
+ * 暗色模式基础
+ * ======================================== */
+:root.dark {
+  --background: oklch(0.1 0 0);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.15 0 0);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.12 0 0);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.65 0.18 250);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.25 0 0);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.25 0 0);
+  --accent-foreground: oklch(0.95 0 0);
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(0.95 0 0);
+  --border: oklch(0.28 0 0);
+  --input: oklch(0.3 0 0);
+  --ring: oklch(0.65 0.18 250);
+
+  --tab-scrollbar-thumb: oklch(0.5 0 0 / 0.4);
+  --tab-scrollbar-thumb-hover: oklch(0.6 0 0 / 0.5);
+
+  --tab-message-info-bg: oklch(0.2 0.02 250);
+  --tab-message-info-border: oklch(0.35 0.08 250);
+  --tab-message-info-icon-bg: oklch(0.3 0.06 250);
+  --tab-message-info-icon: oklch(0.75 0.12 250);
+
+  --tab-message-success-bg: oklch(0.2 0.03 160);
+  --tab-message-success-border: oklch(0.4 0.1 160);
+  --tab-message-success-icon-bg: oklch(0.3 0.08 160);
+  --tab-message-success-icon: oklch(0.75 0.12 160);
+
+  --tab-message-warning-bg: oklch(0.2 0.04 60);
+  --tab-message-warning-border: oklch(0.45 0.12 60);
+  --tab-message-warning-icon-bg: oklch(0.35 0.1 60);
+  --tab-message-warning-icon: oklch(0.8 0.15 60);
+
+  --tab-message-danger-bg: oklch(0.2 0.03 25);
+  --tab-message-danger-border: oklch(0.45 0.12 25);
+  --tab-message-danger-icon-bg: oklch(0.35 0.1 25);
+  --tab-message-danger-icon: oklch(0.8 0.12 25);
+}

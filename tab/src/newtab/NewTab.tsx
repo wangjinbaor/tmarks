@@ -21,7 +21,7 @@ import { BatchEditModal } from './components/BatchEditModal';
 import { BatchEditTip } from './components/BatchEditTip';
 import { ShortcutContextMenu } from './components/ShortcutContextMenu';
 import { FAVICON_API } from './constants';
-import { useBrowserBookmarksSync } from './hooks/useBrowserBookmarksSync';
+import { useBrowserBookmarksSync } from './features/browser-sync';
 
 export function NewTab() {
   const { settings, isLoading, loadData, updateSettings, shortcutGroups, activeGroupId, setActiveGroup, addGridItem } = useNewtabStore();
@@ -32,8 +32,11 @@ export function NewTab() {
   const [showBatchEditTip, setShowBatchEditTip] = useState(false);
   const [batchSelectedIds, setBatchSelectedIds] = useState<Set<string>>(new Set());
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
   const wheelTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const isWheelLocked = useRef(false);
+  const longPressTimerRef = useRef<number | null>(null);
+  const longPressStartPosRef = useRef<{ x: number; y: number } | null>(null);
   
   // 使用 ref 存储最新的状态，避免 handleWheel 频繁重建
   const stateRef = useRef({ shortcutGroups, activeGroupId, setActiveGroup });
@@ -115,6 +118,46 @@ export function NewTab() {
     }
   }, []);
 
+  // 长按 2 秒切换编辑模式
+  const clearLongPress = useCallback(() => {
+    if (longPressTimerRef.current) {
+      window.clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    longPressStartPosRef.current = null;
+  }, []);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return; // 仅左键
+    const target = e.target as HTMLElement;
+    // 排除设置面板、弹窗、输入框、按钮等交互元素
+    const isInModal = target.closest('[role="dialog"]') || target.closest('.glass-modal') || target.closest('.glass-modal-dark');
+    const isInteractive = target.closest('button') || target.closest('a') || target.closest('input') || target.closest('textarea');
+    const isShortcutItem = target.closest('[data-shortcut-item]');
+    
+    if (isInModal || isInteractive || isShortcutItem) return;
+    
+    clearLongPress();
+    longPressStartPosRef.current = { x: e.clientX, y: e.clientY };
+    longPressTimerRef.current = window.setTimeout(() => {
+      setIsEditing((prev) => !prev);
+      clearLongPress();
+    }, 2000);
+  }, [clearLongPress]);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!longPressStartPosRef.current) return;
+    const dx = e.clientX - longPressStartPosRef.current.x;
+    const dy = e.clientY - longPressStartPosRef.current.y;
+    if (Math.hypot(dx, dy) > 10) {
+      clearLongPress();
+    }
+  }, [clearLongPress]);
+
+  const handlePointerUp = useCallback(() => {
+    clearLongPress();
+  }, [clearLongPress]);
+
   // 监听滚轮事件
   useEffect(() => {
     if (!settings.showShortcuts) return;
@@ -150,7 +193,13 @@ export function NewTab() {
   }
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div
+      className="relative w-full h-full overflow-hidden"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
+    >
       {/* 壁纸背景 */}
       <Wallpaper config={settings.wallpaper} onRefresh={handleWallpaperRefresh} />
 
@@ -211,6 +260,8 @@ export function NewTab() {
                 isBatchMode={showBatchEdit}
                 batchSelectedIds={batchSelectedIds}
                 onBatchSelectedIdsChange={setBatchSelectedIds}
+                isEditing={isEditing}
+                onEditingChange={setIsEditing}
               />
             </div>
           </div>

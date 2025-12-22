@@ -17,14 +17,23 @@ interface BookmarkFolderModalProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenFolder?: (folderId: string) => void;
+  isBatchMode?: boolean;
+  batchSelectedIds?: Set<string>;
+  onBatchSelectedIdsChange?: (next: Set<string>) => void;
 }
 
 function SortableModalItem({
   item,
   onOpenFolder,
+  isBatchMode,
+  isSelected,
+  onToggleSelect,
 }: {
   item: GridItem;
   onOpenFolder?: (folderId: string) => void;
+  isBatchMode?: boolean;
+  isSelected?: boolean;
+  onToggleSelect?: (id: string) => void;
 }) {
   const {
     attributes,
@@ -41,16 +50,36 @@ function SortableModalItem({
     opacity: isDragging ? 0.5 : 1,
   };
 
+  // 批量模式下，点击时切换选中状态
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (isBatchMode && onToggleSelect) {
+      // 只有在没有拖拽的情况下才触发选中
+      if (!isDragging) {
+        e.preventDefault();
+        e.stopPropagation();
+        onToggleSelect(item.id);
+      }
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       {...attributes}
       {...listeners}
+      onPointerUp={handlePointerUp}
       className="touch-none cursor-grab active:cursor-grabbing"
     >
       <div className="h-[88px] w-[80px]">
-        <WidgetRenderer item={item} onOpenFolder={onOpenFolder} isEditing />
+        <WidgetRenderer
+          item={item}
+          onOpenFolder={onOpenFolder}
+          isEditing
+          isBatchMode={isBatchMode}
+          isSelected={isSelected}
+          onToggleSelect={onToggleSelect}
+        />
       </div>
     </div>
   );
@@ -62,6 +91,9 @@ export function BookmarkFolderModal({
   isOpen,
   onClose,
   onOpenFolder,
+  isBatchMode,
+  batchSelectedIds,
+  onBatchSelectedIdsChange,
 }: BookmarkFolderModalProps) {
   const { removeGridFolder, updateGridItem, browserBookmarksRootId, homeBrowserFolderId } = useNewtabStore();
   const [isVisible, setIsVisible] = useState(false);
@@ -322,7 +354,20 @@ export function BookmarkFolderModal({
                     <div className="col-span-full text-center py-10 text-white/50 text-sm">文件夹为空</div>
                   ) : (
                     items.map((item) => (
-                      <SortableModalItem key={item.id} item={item} onOpenFolder={onOpenFolder} />
+                      <SortableModalItem
+                        key={item.id}
+                        item={item}
+                        onOpenFolder={onOpenFolder}
+                        isBatchMode={isBatchMode}
+                        isSelected={batchSelectedIds?.has(item.id)}
+                        onToggleSelect={(id) => {
+                          if (!onBatchSelectedIdsChange) return;
+                          const next = new Set(batchSelectedIds ?? []);
+                          if (next.has(id)) next.delete(id);
+                          else next.add(id);
+                          onBatchSelectedIdsChange(next);
+                        }}
+                      />
                     ))
                   )}
                 </div>

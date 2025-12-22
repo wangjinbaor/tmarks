@@ -266,7 +266,13 @@ export function GroupSidebar({ onOpenSettings }: GroupSidebarProps) {
       <ConfirmModal
         isOpen={!!deleteGroupId}
         title="删除分组"
-        message="删除分组后，该分组的快捷方式将移到「首页」。确定删除？"
+        message={(() => {
+          const group = shortcutGroups.find((g) => g.id === deleteGroupId);
+          if (group?.bookmarkFolderId) {
+            return "删除分组后，该分组的所有内容将被一并删除。确定删除？";
+          }
+          return "删除分组后，该分组的快捷方式将移到「首页」。确定删除？";
+        })()}
         confirmText="删除"
         cancelText="取消"
         confirmVariant="danger"

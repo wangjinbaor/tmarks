@@ -83,6 +83,8 @@ export interface NewTabState {
   moveGridItemToFolder: (id: string, folderId: string | null) => void;
   reorderGridItemsInCurrentScope: (activeId: string, overId: string) => void;
   reorderGridItemsInFolderScope: (folderId: string, activeId: string, overId: string) => void;
+  mergeFolders: (sourceFolderId: string, targetFolderId: string) => void;
+  createFolderFromShortcuts: (shortcutId1: string, shortcutId2: string, folderName?: string) => string | null;
   cleanupEmptySecondLevelFolders: () => void;
   cleanupAllEmptyFolders: () => void;
   cleanupEmptyGroups: () => void;

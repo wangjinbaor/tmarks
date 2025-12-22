@@ -37,7 +37,7 @@ export function SearchBar({ engine, enableSuggestions = true, onEngineChange }: 
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   const { shortcuts } = useNewtabStore();
-  const { searchBookmarks } = useTMarksSync();
+  const { searchBookmarks, recordBookmarkClick } = useTMarksSync();
 
   const engineConfig = SEARCH_ENGINES.find((e) => e.id === engine) || SEARCH_ENGINES[0];
 
@@ -123,6 +123,10 @@ export function SearchBar({ engine, enableSuggestions = true, onEngineChange }: 
   }, [query, engineConfig]);
 
   const handleSelect = (result: SearchResult) => {
+    // 如果是书签，记录点击次数
+    if (result.source === 'bookmark') {
+      recordBookmarkClick(result.id);
+    }
     window.location.href = result.url;
   };
 

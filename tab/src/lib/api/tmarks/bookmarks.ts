@@ -181,4 +181,12 @@ export class BookmarksAPI extends TMarksClient {
       bookmark_ids: bookmarkIds,
     });
   }
+
+  /**
+   * 记录书签点击
+   * POST /api/tab/bookmarks/:id/click
+   */
+  async recordClick(id: string): Promise<{ message: string; clicked_at: string }> {
+    return this.post<{ message: string; clicked_at: string }>(`/tab/bookmarks/${id}/click`, {});
+  }
 }

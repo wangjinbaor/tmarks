@@ -28,6 +28,9 @@ export const Z_INDEX = {
   // 模态框层 (100-119)
   MODAL_BACKDROP: 100,
   MODAL_CONTENT: 110,
+  
+  // 批量编辑底栏 (120-129) - 需要在模态框之上
+  BATCH_EDIT_BAR: 120,
 
   DRAG_OVERLAY: 1000,
   

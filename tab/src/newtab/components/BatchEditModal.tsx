@@ -68,10 +68,18 @@ export function BatchEditModal({ isOpen, onClose, selectedIds, onSelectedIdsChan
     if (selectedIds.size === 0 || !targetGroupId) return;
     
     selectedIds.forEach(id => {
+      const item = gridItems.find(i => i.id === id);
+      if (!item) return;
+      
+      // 如果目标分组和当前分组相同，且已经在根目录，跳过
+      if (item.groupId === targetGroupId && !item.parentId) return;
+      
+      // 更新 groupId 和清除 parentId（移动到分组根目录）
       updateGridItem(id, { groupId: targetGroupId, parentId: undefined });
     });
     
-    // 清理空文件夹和空分组
+    // cleanupEmptyGroups 会在 updateGridItem 后自动触发（如果需要的话）
+    // 但 updateGridItem 本身不会触发，所以这里手动调用一次
     setTimeout(() => {
       cleanupAllEmptyFolders();
       cleanupEmptyGroups();
@@ -93,7 +101,7 @@ export function BatchEditModal({ isOpen, onClose, selectedIds, onSelectedIdsChan
     <>
       <div
         className="fixed bottom-20 left-1/2 -translate-x-1/2"
-        style={{ zIndex: Z_INDEX.DOCK + 1 }}
+        style={{ zIndex: Z_INDEX.BATCH_EDIT_BAR }}
       >
         <div
           className="flex items-center justify-between gap-3 px-4 py-3 rounded-2xl glass-dark shadow-2xl w-[min(920px,calc(100vw-32px))]"

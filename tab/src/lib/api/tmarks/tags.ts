@@ -144,4 +144,12 @@ export class TagsAPI extends TMarksClient {
       targetTag: targetResponse.data.tag,
     };
   }
+
+  /**
+   * 记录标签点击
+   * PATCH /api/tab/tags/:id/click
+   */
+  async incrementClick(id: string): Promise<{ message: string }> {
+    return this.patch<{ message: string }>(`/tab/tags/${id}/click`, {});
+  }
 }

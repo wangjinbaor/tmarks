@@ -1,76 +1,42 @@
-:root.theme-bw {
-  --background: #fcfcfc;
-  --background: oklch(0.9900 0 0);
-  --foreground: #000000;
-  --foreground: oklch(0 0 0);
-  --card: #ffffff;
-  --card: oklch(1 0 0);
-  --card-foreground: #000000;
-  --card-foreground: oklch(0 0 0);
-  --popover: #fcfcfc;
-  --popover: oklch(0.9900 0 0);
-  --popover-foreground: #000000;
-  --popover-foreground: oklch(0 0 0);
-  --primary: #000000;
-  --primary: oklch(0 0 0);
-  --primary-foreground: #ffffff;
-  --primary-foreground: oklch(1 0 0);
-  --secondary: #f0f0f0;
-  --secondary: oklch(0.9400 0 0);
-  --secondary-foreground: #000000;
-  --secondary-foreground: oklch(0 0 0);
-  --muted: #f7f7f7;
-  --muted: oklch(0.9700 0 0);
-  --muted-foreground: #6f6f6f;
-  --muted-foreground: oklch(0.4400 0 0);
-  --accent: #f0f0f0;
-  --accent: oklch(0.9400 0 0);
-  --accent-foreground: #000000;
-  --accent-foreground: oklch(0 0 0);
-  --destructive: #dc2626;
-  --destructive: oklch(0.6300 0.1900 23.0300);
-  --destructive-foreground: #ffffff;
-  --destructive-foreground: oklch(1 0 0);
-  --border: #e5e5e5;
-  --border: oklch(0.9200 0 0);
-  --input: #f0f0f0;
-  --input: oklch(0.9400 0 0);
-  --ring: #000000;
-  --ring: oklch(0 0 0);
-  --chart-1: oklch(0.8100 0.1700 75.3500);
-  --chart-2: oklch(0.5500 0.2200 264.5300);
-  --chart-3: oklch(0.7200 0 0);
-  --chart-4: oklch(0.9200 0 0);
-  --chart-5: oklch(0.5600 0 0);
-  --sidebar: oklch(0.9900 0 0);
-  --sidebar-foreground: oklch(0 0 0);
-  --sidebar-primary: oklch(0 0 0);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.9400 0 0);
-  --sidebar-accent-foreground: oklch(0 0 0);
-  --sidebar-border: oklch(0.9400 0 0);
-  --sidebar-ring: oklch(0 0 0);
-  --font-sans: Geist, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: Geist Mono, monospace;
-  --radius: 0.5rem;
-  --shadow-x: 0px;
-  --shadow-y: 1px;
-  --shadow-blur: 2px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.18;
-  --shadow-color: hsl(0 0% 0%);
-  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
-  --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
-  --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
-  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
-  --tracking-normal: 0em;
-  --spacing: 0.25rem;
+/**
+ * Black & White 主题
+ * 
+ * 纯黑白极简风格
+ */
 
+:root.theme-bw {
+  /* 核心颜色：纯黑白 */
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0 0 0);
+  --popover: oklch(0.99 0 0);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0 0);
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.44 0 0);
+  --accent: oklch(0.94 0 0);
+  --accent-foreground: oklch(0 0 0);
+  --destructive: oklch(0.63 0.19 23);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0 0);
+  --input: oklch(0.94 0 0);
+  --ring: oklch(0 0 0);
+
+  /* 图表：灰度 */
+  --chart-1: oklch(0.81 0.17 75);
+  --chart-2: oklch(0.55 0.22 264);
+  --chart-3: oklch(0.72 0 0);
+  --chart-4: oklch(0.92 0 0);
+  --chart-5: oklch(0.56 0 0);
+
+  /* 阴影：更强对比 */
+  --shadow-opacity: 0.18;
+
+  /* Popup：使用语义变量 */
   --tab-popup-bg: var(--background);
   --tab-popup-surface: var(--card);
   --tab-popup-text: var(--foreground);
@@ -82,12 +48,14 @@
   --tab-popup-primary-via: var(--ring);
   --tab-popup-primary-to: var(--primary);
   --tab-popup-primary-text: var(--primary-foreground);
+  --tab-popup-primary-shadow: oklch(0 0 0 / 0.2);
 
   --tab-popup-success-from: var(--primary);
   --tab-popup-success-via: var(--ring);
   --tab-popup-success-to: var(--primary);
   --tab-popup-success-text: var(--primary-foreground);
 
+  /* Badge：统一灰度 */
   --tab-popup-badge-blue-bg: var(--secondary);
   --tab-popup-badge-blue-text: var(--secondary-foreground);
   --tab-popup-badge-amber-bg: var(--secondary);
@@ -97,6 +65,7 @@
   --tab-popup-badge-purple-bg: var(--secondary);
   --tab-popup-badge-purple-text: var(--secondary-foreground);
 
+  /* Section：统一风格 */
   --tab-popup-section-gray-bg: var(--card);
   --tab-popup-section-gray-border: var(--border);
 
@@ -126,6 +95,7 @@
   --tab-popup-section-emerald-badge-bg: var(--secondary);
   --tab-popup-section-emerald-badge-text: var(--secondary-foreground);
 
+  /* Action：统一风格 */
   --tab-popup-action-neutral-bg: var(--muted);
   --tab-popup-action-neutral-bg-hover: var(--secondary);
   --tab-popup-action-neutral-text: var(--muted-foreground);
@@ -142,6 +112,7 @@
   --tab-popup-action-blue-bg-hover: var(--muted);
   --tab-popup-action-blue-text: var(--secondary-foreground);
 
+  /* Input */
   --tab-popup-input-bg: var(--card);
   --tab-popup-input-border: var(--input);
   --tab-popup-input-text: var(--card-foreground);
@@ -149,9 +120,11 @@
   --tab-popup-input-focus-ring: var(--ring);
   --tab-popup-input-focus-border: var(--ring);
 
+  /* Footer */
   --tab-popup-footer-bg: var(--card);
   --tab-popup-footer-border: var(--border);
 
+  /* Onboarding */
   --tab-popup-onboarding-bg: var(--foreground);
   --tab-popup-onboarding-overlay: color-mix(in oklch, var(--foreground) 85%, transparent);
   --tab-popup-onboarding-card-bg: color-mix(in oklch, var(--background) 12%, transparent);
@@ -160,18 +133,77 @@
   --tab-popup-onboarding-tip-bg: color-mix(in oklch, var(--background) 18%, transparent);
   --tab-popup-onboarding-tip-text: var(--primary-foreground);
 
+  /* Options 页面 */
   --tab-options-page-bg-from: var(--background);
   --tab-options-page-bg-via: var(--background);
   --tab-options-page-bg-to: var(--background);
   --tab-options-card-bg: var(--card);
   --tab-options-card-border: var(--border);
+
+  --tab-options-hero-gradient-from: var(--muted);
+  --tab-options-hero-gradient-via: var(--background);
+  --tab-options-hero-gradient-to: var(--muted);
+
+  --tab-options-pill-bg: var(--secondary);
+  --tab-options-pill-text: var(--foreground);
+
   --tab-options-title: var(--foreground);
   --tab-options-text: var(--muted-foreground);
   --tab-options-text-muted: var(--muted-foreground);
+
+  --tab-options-button-border: var(--input);
+  --tab-options-button-text: var(--foreground);
+  --tab-options-button-hover-bg: var(--muted);
   --tab-options-button-primary-bg: var(--primary);
   --tab-options-button-primary-hover: var(--ring);
   --tab-options-button-primary-text: var(--primary-foreground);
 
+  --tab-options-modal-overlay: color-mix(in oklch, var(--foreground) 40%, transparent);
+  --tab-options-modal-border: var(--border);
+  --tab-options-modal-bg: var(--popover);
+  --tab-options-modal-topbar-from: var(--foreground);
+  --tab-options-modal-topbar-via: var(--ring);
+  --tab-options-modal-topbar-to: var(--foreground);
+
+  --tab-options-danger-border: color-mix(in oklch, var(--destructive) 30%, transparent);
+  --tab-options-danger-bg: color-mix(in oklch, var(--destructive) 10%, transparent);
+  --tab-options-danger-text: var(--foreground);
+
+  --tab-options-switch-thumb: var(--primary-foreground);
+  --tab-options-switch-track-off: var(--secondary);
+  --tab-options-switch-blue-on: var(--primary);
+  --tab-options-switch-amber-on: var(--primary);
+  --tab-options-switch-purple-on: var(--primary);
+
+  --tab-options-focus-blue: var(--ring);
+  --tab-options-focus-amber: var(--ring);
+  --tab-options-focus-purple: var(--ring);
+
+  /* Cache metrics：统一灰度 */
+  --tab-options-cache-metric-emerald-border: var(--border);
+  --tab-options-cache-metric-emerald-bg: var(--muted);
+  --tab-options-cache-metric-emerald-value: var(--foreground);
+  --tab-options-cache-metric-emerald-label: color-mix(in oklch, var(--foreground) 70%, transparent);
+
+  --tab-options-cache-metric-blue-border: var(--border);
+  --tab-options-cache-metric-blue-bg: var(--muted);
+  --tab-options-cache-metric-blue-value: var(--foreground);
+  --tab-options-cache-metric-blue-label: color-mix(in oklch, var(--foreground) 70%, transparent);
+
+  --tab-options-cache-metric-slate-border: var(--border);
+  --tab-options-cache-metric-slate-bg: var(--muted);
+  --tab-options-cache-metric-slate-value: var(--muted-foreground);
+  --tab-options-cache-metric-slate-label: var(--muted-foreground);
+
+  --tab-options-cache-sync-bg: var(--primary);
+  --tab-options-cache-sync-hover: var(--ring);
+  --tab-options-cache-sync-text: var(--primary-foreground);
+
+  /* 滚动条 */
+  --tab-scrollbar-thumb: color-mix(in oklch, var(--foreground) 18%, transparent);
+  --tab-scrollbar-thumb-hover: color-mix(in oklch, var(--foreground) 28%, transparent);
+
+  /* 消息：统一灰度 */
   --tab-message-info-bg: var(--muted);
   --tab-message-info-border: var(--border);
   --tab-message-info-icon-bg: var(--secondary);
@@ -192,380 +224,42 @@
   --tab-message-danger-icon-bg: var(--secondary);
   --tab-message-danger-icon: var(--foreground);
 
+  /* 标签 */
   --tab-tag-selected-bg: var(--primary);
   --tab-tag-selected-text: var(--primary-foreground);
   --tab-tag-unselected-bg: var(--card);
   --tab-tag-unselected-text: var(--card-foreground);
   --tab-tag-border: var(--border);
   --tab-tag-new-indicator: var(--muted-foreground);
-
-  --tab-scrollbar-thumb: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-scrollbar-thumb-hover: color-mix(in oklch, var(--foreground) 28%, transparent);
-  --tab-scrollbar-thumb-dark: color-mix(in oklch, var(--foreground) 35%, transparent);
-  --tab-scrollbar-thumb-dark-hover: color-mix(in oklch, var(--foreground) 45%, transparent);
-
-  --tab-options-page-bg-from: var(--background);
-  --tab-options-page-bg-via: var(--background);
-  --tab-options-page-bg-to: var(--background);
-  --tab-options-card-bg: var(--card);
-  --tab-options-card-border: var(--border);
-
-  --tab-options-hero-gradient-from: var(--muted);
-  --tab-options-hero-gradient-via: var(--background);
-  --tab-options-hero-gradient-to: var(--muted);
-
-  --tab-options-pill-bg: var(--secondary);
-  --tab-options-pill-text: var(--foreground);
-
-  --tab-options-title: var(--foreground);
-  --tab-options-text: var(--muted-foreground);
-  --tab-options-text-muted: var(--muted-foreground);
-
-  --tab-options-tag-bg: var(--card);
-  --tab-options-tag-border: var(--border);
-  --tab-options-tag-text: var(--muted-foreground);
-
-  --tab-options-save-card-border: var(--border);
-  --tab-options-save-card-bg: var(--card);
-  --tab-options-save-card-grad-from: var(--foreground);
-  --tab-options-save-card-grad-via: var(--ring);
-  --tab-options-save-card-grad-to: var(--foreground);
-
-  --tab-options-button-border: var(--input);
-  --tab-options-button-text: var(--foreground);
-  --tab-options-button-hover-bg: var(--muted);
-  --tab-options-button-primary-bg: var(--primary);
-  --tab-options-button-primary-hover: var(--ring);
-  --tab-options-button-primary-text: var(--primary-foreground);
-
-  --tab-options-modal-overlay: color-mix(in oklch, var(--foreground) 40%, transparent);
-  --tab-options-modal-border: var(--border);
-  --tab-options-modal-bg: var(--popover);
-  --tab-options-modal-topbar-from: var(--foreground);
-  --tab-options-modal-topbar-via: var(--ring);
-  --tab-options-modal-topbar-to: var(--foreground);
-  --tab-options-modal-close-text: var(--muted-foreground);
-  --tab-options-modal-close-hover-border: var(--border);
-  --tab-options-modal-close-hover-text: var(--foreground);
-
-  --tab-options-danger-border: color-mix(in oklch, var(--destructive) 30%, transparent);
-  --tab-options-danger-bg: color-mix(in oklch, var(--destructive) 10%, transparent);
-  --tab-options-danger-text: var(--foreground);
-
-  --tab-options-switch-thumb: var(--primary-foreground);
-
-  --tab-options-pref-card-border: var(--border);
-  --tab-options-pref-card-border-dark: var(--border);
-  --tab-options-pref-card-bg: var(--card);
-  --tab-options-pref-topbar-from: var(--foreground);
-  --tab-options-pref-topbar-via: var(--ring);
-  --tab-options-pref-topbar-to: var(--foreground);
-
-  --tab-options-pref-title: var(--foreground);
-  --tab-options-pref-title-dark: var(--foreground);
-  --tab-options-pref-label: var(--foreground);
-  --tab-options-pref-label-dark: var(--foreground);
-  --tab-options-pref-desc: var(--muted-foreground);
-  --tab-options-pref-desc-dark: var(--muted-foreground);
-
-  --tab-options-switch-track-off: var(--secondary);
-  --tab-options-switch-track-off-dark: var(--secondary);
-
-  --tab-options-focus-blue: var(--ring);
-  --tab-options-focus-amber: var(--ring);
-  --tab-options-focus-purple: var(--ring);
-
-  --tab-options-switch-blue-on: var(--primary);
-  --tab-options-switch-amber-on: var(--primary);
-  --tab-options-switch-purple-on: var(--primary);
-
-  --tab-options-pref-hint-border: var(--border);
-  --tab-options-pref-hint-border-dark: var(--border);
-  --tab-options-pref-hint-bg: var(--muted);
-  --tab-options-pref-hint-bg-dark: var(--muted);
-  --tab-options-pref-hint-text: var(--foreground);
-  --tab-options-pref-hint-text-dark: var(--foreground);
-
-  --tab-options-segment-border: var(--border);
-  --tab-options-segment-border-dark: var(--border);
-  --tab-options-segment-bg: var(--card);
-  --tab-options-segment-bg-dark: var(--card);
-  --tab-options-segment-text: var(--muted-foreground);
-  --tab-options-segment-text-dark: var(--muted-foreground);
-  --tab-options-segment-hover-text: var(--foreground);
-  --tab-options-segment-hover-text-dark: var(--foreground);
-  --tab-options-segment-public-bg: var(--primary);
-  --tab-options-segment-private-bg: var(--primary);
-  --tab-options-segment-selected-text: var(--primary-foreground);
-
-  --tab-options-select-border: var(--border);
-  --tab-options-select-border-dark: var(--border);
-  --tab-options-select-bg: var(--card);
-  --tab-options-select-bg-dark: var(--card);
-  --tab-options-select-text: var(--foreground);
-  --tab-options-select-text-dark: var(--foreground);
-
-  --tab-options-tmarks-card-border: var(--border);
-  --tab-options-tmarks-card-border-dark: var(--border);
-  --tab-options-tmarks-card-bg: var(--card);
-  --tab-options-tmarks-topbar-from: var(--foreground);
-  --tab-options-tmarks-topbar-via: var(--ring);
-  --tab-options-tmarks-topbar-to: var(--foreground);
-  --tab-options-tmarks-badge-bg: var(--secondary);
-  --tab-options-tmarks-badge-text: var(--secondary-foreground);
-  --tab-options-tmarks-input-border: var(--input);
-  --tab-options-tmarks-input-bg: var(--card);
-  --tab-options-tmarks-input-text: var(--card-foreground);
-  --tab-options-tmarks-input-ring: var(--ring);
-  --tab-options-tmarks-code-bg: var(--muted);
-  --tab-options-tmarks-info-bg: var(--muted);
-  --tab-options-tmarks-info-title: var(--foreground);
-  --tab-options-tmarks-info-text: var(--muted-foreground);
-
-  --tab-options-cache-card-border: var(--border);
-  --tab-options-cache-card-border-dark: var(--border);
-  --tab-options-cache-card-bg: var(--card);
-  --tab-options-cache-topbar-from: var(--foreground);
-  --tab-options-cache-topbar-via: var(--ring);
-  --tab-options-cache-topbar-to: var(--foreground);
-
-  --tab-options-cache-metric-emerald-border: var(--border);
-  --tab-options-cache-metric-emerald-bg: var(--muted);
-  --tab-options-cache-metric-emerald-value: var(--foreground);
-  --tab-options-cache-metric-emerald-label: color-mix(in oklch, var(--foreground) 70%, transparent);
-
-  --tab-options-cache-metric-blue-border: var(--border);
-  --tab-options-cache-metric-blue-bg: var(--muted);
-  --tab-options-cache-metric-blue-value: var(--foreground);
-  --tab-options-cache-metric-blue-label: color-mix(in oklch, var(--foreground) 70%, transparent);
-
-  --tab-options-cache-metric-slate-border: var(--border);
-  --tab-options-cache-metric-slate-bg: var(--muted);
-  --tab-options-cache-metric-slate-value: var(--muted-foreground);
-  --tab-options-cache-metric-slate-label: var(--muted-foreground);
-
-  --tab-options-cache-sync-bg: var(--primary);
-  --tab-options-cache-sync-hover: var(--ring);
-  --tab-options-cache-sync-text: var(--primary-foreground);
 }
 
+/* Dark mode */
 :root.theme-bw.dark {
-  --background: #000000;
   --background: oklch(0 0 0);
-  --foreground: #ffffff;
   --foreground: oklch(1 0 0);
-  --card: #242424;
-  --card: oklch(0.1400 0 0);
-  --card-foreground: #ffffff;
+  --card: oklch(0.14 0 0);
   --card-foreground: oklch(1 0 0);
-  --popover: #2e2e2e;
-  --popover: oklch(0.1800 0 0);
-  --popover-foreground: #ffffff;
+  --popover: oklch(0.18 0 0);
   --popover-foreground: oklch(1 0 0);
-  --primary: #ffffff;
   --primary: oklch(1 0 0);
-  --primary-foreground: #000000;
   --primary-foreground: oklch(0 0 0);
-  --secondary: #3a3a3a;
-  --secondary: oklch(0.2500 0 0);
-  --secondary-foreground: #ffffff;
+  --secondary: oklch(0.25 0 0);
   --secondary-foreground: oklch(1 0 0);
-  --muted: #353535;
-  --muted: oklch(0.2300 0 0);
-  --muted-foreground: #bdbdbd;
-  --muted-foreground: oklch(0.7200 0 0);
-  --accent: #4f4f4f;
-  --accent: oklch(0.3200 0 0);
-  --accent-foreground: #ffffff;
+  --muted: oklch(0.23 0 0);
+  --muted-foreground: oklch(0.72 0 0);
+  --accent: oklch(0.32 0 0);
   --accent-foreground: oklch(1 0 0);
-  --destructive: #ef4444;
-  --destructive: oklch(0.6900 0.2000 23.9100);
-  --destructive-foreground: #000000;
+  --destructive: oklch(0.69 0.2 24);
   --destructive-foreground: oklch(0 0 0);
-  --border: #404040;
-  --border: oklch(0.2600 0 0);
-  --input: #4f4f4f;
-  --input: oklch(0.3200 0 0);
-  --ring: #bdbdbd;
-  --ring: oklch(0.7200 0 0);
-  --chart-1: oklch(0.8100 0.1700 75.3500);
-  --chart-2: oklch(0.5800 0.2100 260.8400);
-  --chart-3: oklch(0.5600 0 0);
-  --chart-4: oklch(0.4400 0 0);
-  --chart-5: oklch(0.9200 0 0);
-  --sidebar: oklch(0.1800 0 0);
-  --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(1 0 0);
-  --sidebar-primary-foreground: oklch(0 0 0);
-  --sidebar-accent: oklch(0.3200 0 0);
-  --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(0.3200 0 0);
-  --sidebar-ring: oklch(0.7200 0 0);
-  --font-sans: Geist, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: Geist Mono, monospace;
-  --radius: 0.5rem;
-  --shadow-x: 0px;
-  --shadow-y: 1px;
-  --shadow-blur: 2px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.18;
-  --shadow-color: hsl(0 0% 0%);
-  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
-  --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
-  --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
-  --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
-  --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
-  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
+  --border: oklch(0.26 0 0);
+  --input: oklch(0.32 0 0);
+  --ring: oklch(0.72 0 0);
 
   --tab-scrollbar-thumb: color-mix(in oklch, var(--foreground) 28%, transparent);
   --tab-scrollbar-thumb-hover: color-mix(in oklch, var(--foreground) 38%, transparent);
-  --tab-scrollbar-thumb-dark: color-mix(in oklch, var(--foreground) 28%, transparent);
-  --tab-scrollbar-thumb-dark-hover: color-mix(in oklch, var(--foreground) 38%, transparent);
-
-  --tab-options-page-bg-from: var(--background);
-  --tab-options-page-bg-via: var(--background);
-  --tab-options-page-bg-to: var(--background);
-  --tab-options-card-bg: var(--card);
-  --tab-options-card-border: var(--border);
-
-  --tab-options-hero-gradient-from: var(--muted);
-  --tab-options-hero-gradient-via: var(--background);
-  --tab-options-hero-gradient-to: var(--muted);
 
   --tab-options-pill-bg: color-mix(in oklch, var(--foreground) 10%, transparent);
-  --tab-options-pill-text: var(--foreground);
-
-  --tab-options-title: var(--foreground);
-  --tab-options-text: var(--muted-foreground);
-  --tab-options-text-muted: var(--muted-foreground);
-
-  --tab-options-tag-bg: color-mix(in oklch, var(--foreground) 8%, transparent);
-  --tab-options-tag-border: color-mix(in oklch, var(--foreground) 14%, transparent);
-  --tab-options-tag-text: var(--muted-foreground);
-
-  --tab-options-save-card-border: var(--border);
-  --tab-options-save-card-bg: var(--card);
-  --tab-options-save-card-grad-from: var(--foreground);
-  --tab-options-save-card-grad-via: var(--ring);
-  --tab-options-save-card-grad-to: var(--foreground);
-
-  --tab-options-button-border: var(--input);
-  --tab-options-button-text: var(--foreground);
   --tab-options-button-hover-bg: color-mix(in oklch, var(--foreground) 8%, transparent);
-  --tab-options-button-primary-bg: var(--primary);
-  --tab-options-button-primary-hover: color-mix(in oklch, var(--primary) 85%, var(--ring));
-  --tab-options-button-primary-text: var(--primary-foreground);
-
-  --tab-options-modal-overlay: color-mix(in oklch, var(--foreground) 40%, transparent);
   --tab-options-modal-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-modal-bg: var(--popover);
-  --tab-options-modal-topbar-from: var(--foreground);
-  --tab-options-modal-topbar-via: var(--ring);
-  --tab-options-modal-topbar-to: var(--foreground);
-  --tab-options-modal-close-text: var(--muted-foreground);
-  --tab-options-modal-close-hover-border: color-mix(in oklch, var(--foreground) 20%, transparent);
-  --tab-options-modal-close-hover-text: var(--foreground);
-
-  --tab-options-danger-border: color-mix(in oklch, var(--destructive) 30%, transparent);
-  --tab-options-danger-bg: color-mix(in oklch, var(--destructive) 10%, transparent);
-  --tab-options-danger-text: var(--foreground);
-
-  --tab-options-switch-thumb: var(--primary-foreground);
-
-  --tab-options-pref-card-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-pref-card-border-dark: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-pref-card-bg: var(--card);
-  --tab-options-pref-topbar-from: var(--foreground);
-  --tab-options-pref-topbar-via: var(--ring);
-  --tab-options-pref-topbar-to: var(--foreground);
-
-  --tab-options-pref-title: var(--foreground);
-  --tab-options-pref-title-dark: var(--foreground);
-  --tab-options-pref-label: var(--foreground);
-  --tab-options-pref-label-dark: var(--foreground);
-  --tab-options-pref-desc: var(--muted-foreground);
-  --tab-options-pref-desc-dark: var(--muted-foreground);
-
   --tab-options-switch-track-off: color-mix(in oklch, var(--foreground) 14%, transparent);
-  --tab-options-switch-track-off-dark: color-mix(in oklch, var(--foreground) 14%, transparent);
-
-  --tab-options-focus-blue: var(--ring);
-  --tab-options-focus-amber: var(--ring);
-  --tab-options-focus-purple: var(--ring);
-
-  --tab-options-switch-blue-on: var(--primary);
-  --tab-options-switch-amber-on: var(--primary);
-  --tab-options-switch-purple-on: var(--primary);
-
-  --tab-options-pref-hint-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-pref-hint-border-dark: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-pref-hint-bg: color-mix(in oklch, var(--foreground) 8%, transparent);
-  --tab-options-pref-hint-bg-dark: color-mix(in oklch, var(--foreground) 8%, transparent);
-  --tab-options-pref-hint-text: var(--foreground);
-  --tab-options-pref-hint-text-dark: var(--foreground);
-
-  --tab-options-segment-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-segment-border-dark: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-segment-bg: color-mix(in oklch, var(--foreground) 6%, transparent);
-  --tab-options-segment-bg-dark: color-mix(in oklch, var(--foreground) 6%, transparent);
-  --tab-options-segment-text: var(--muted-foreground);
-  --tab-options-segment-text-dark: var(--muted-foreground);
-  --tab-options-segment-hover-text: var(--foreground);
-  --tab-options-segment-hover-text-dark: var(--foreground);
-  --tab-options-segment-public-bg: var(--primary);
-  --tab-options-segment-private-bg: var(--primary);
-  --tab-options-segment-selected-text: var(--primary-foreground);
-
-  --tab-options-select-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-select-border-dark: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-select-bg: color-mix(in oklch, var(--foreground) 6%, transparent);
-  --tab-options-select-bg-dark: color-mix(in oklch, var(--foreground) 6%, transparent);
-  --tab-options-select-text: var(--foreground);
-  --tab-options-select-text-dark: var(--foreground);
-
-  --tab-options-tmarks-card-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-tmarks-card-border-dark: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-tmarks-card-bg: var(--card);
-  --tab-options-tmarks-topbar-from: var(--foreground);
-  --tab-options-tmarks-topbar-via: var(--ring);
-  --tab-options-tmarks-topbar-to: var(--foreground);
-  --tab-options-tmarks-badge-bg: color-mix(in oklch, var(--foreground) 10%, transparent);
-  --tab-options-tmarks-badge-text: var(--foreground);
-  --tab-options-tmarks-input-border: var(--input);
-  --tab-options-tmarks-input-bg: var(--card);
-  --tab-options-tmarks-input-text: var(--card-foreground);
-  --tab-options-tmarks-input-ring: var(--ring);
-  --tab-options-tmarks-code-bg: color-mix(in oklch, var(--foreground) 10%, transparent);
-  --tab-options-tmarks-info-bg: color-mix(in oklch, var(--foreground) 6%, transparent);
-  --tab-options-tmarks-info-title: var(--foreground);
-  --tab-options-tmarks-info-text: var(--muted-foreground);
-
-  --tab-options-cache-card-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-cache-card-border-dark: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-cache-card-bg: var(--card);
-  --tab-options-cache-topbar-from: var(--foreground);
-  --tab-options-cache-topbar-via: var(--ring);
-  --tab-options-cache-topbar-to: var(--foreground);
-
-  --tab-options-cache-metric-emerald-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-cache-metric-emerald-bg: color-mix(in oklch, var(--foreground) 6%, transparent);
-  --tab-options-cache-metric-emerald-value: var(--foreground);
-  --tab-options-cache-metric-emerald-label: color-mix(in oklch, var(--foreground) 70%, transparent);
-
-  --tab-options-cache-metric-blue-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-cache-metric-blue-bg: color-mix(in oklch, var(--foreground) 6%, transparent);
-  --tab-options-cache-metric-blue-value: var(--foreground);
-  --tab-options-cache-metric-blue-label: color-mix(in oklch, var(--foreground) 70%, transparent);
-
-  --tab-options-cache-metric-slate-border: color-mix(in oklch, var(--foreground) 18%, transparent);
-  --tab-options-cache-metric-slate-bg: color-mix(in oklch, var(--foreground) 6%, transparent);
-  --tab-options-cache-metric-slate-value: var(--muted-foreground);
-  --tab-options-cache-metric-slate-label: var(--muted-foreground);
-
-  --tab-options-cache-sync-bg: var(--primary);
-  --tab-options-cache-sync-hover: color-mix(in oklch, var(--primary) 85%, var(--ring));
-  --tab-options-cache-sync-text: var(--primary-foreground);
 }

@@ -84,6 +84,9 @@ export function createBrowserBookmarkActions(
       const next = [...preserved, ...normalized];
       set({ gridItems: next });
       saveData();
+
+      // 清理空分组
+      get().cleanupEmptyGroups();
     },
 
     upsertBrowserBookmarkNode: (node) => {
@@ -166,6 +169,9 @@ export function createBrowserBookmarkActions(
       const cleaned = pruneEmptyFoldersCascade(filtered, nextCurrentFolderId, protectedBrowserBookmarkIds);
       set({ gridItems: cleaned.items, currentFolderId: cleaned.currentFolderId });
       saveData();
+
+      // 清理空分组
+      get().cleanupEmptyGroups();
     },
 
     applyBrowserBookmarkChildrenOrder: (_parentBookmarkId, orderedChildBookmarkIds) => {

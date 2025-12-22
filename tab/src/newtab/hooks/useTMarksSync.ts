@@ -227,6 +227,30 @@ export function useTMarksSync() {
     }
   }, [pinnedBookmarks, saveToCache, fetchPinnedBookmarks]);
 
+  // 记录书签点击（静默失败，不影响用户体验）
+  const recordBookmarkClick = useCallback(async (bookmarkId: string) => {
+    try {
+      const client = await getTMarksClient();
+      await client.bookmarks.recordClick(bookmarkId);
+      console.log('[TMarks] 已记录书签点击:', bookmarkId);
+    } catch (error) {
+      // 静默失败，不影响用户体验
+      console.warn('[TMarks] 记录书签点击失败:', error);
+    }
+  }, []);
+
+  // 记录标签点击（静默失败，不影响用户体验）
+  const recordTagClick = useCallback(async (tagId: string) => {
+    try {
+      const client = await getTMarksClient();
+      await client.tags.incrementClick(tagId);
+      console.log('[TMarks] 已记录标签点击:', tagId);
+    } catch (error) {
+      // 静默失败，不影响用户体验
+      console.warn('[TMarks] 记录标签点击失败:', error);
+    }
+  }, []);
+
   return {
     syncState,
     pinnedBookmarks,
@@ -234,5 +258,7 @@ export function useTMarksSync() {
     searchBookmarks,
     checkApiConfigured,
     reorderPinnedBookmarks,
+    recordBookmarkClick,
+    recordTagClick,
   };
 }

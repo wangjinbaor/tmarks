@@ -32,6 +32,7 @@ import { WidgetConfigModal } from './widgets/WidgetConfigModal';
 import { BookmarkFolderModal } from './BookmarkFolderModal';
 import { SortableGridItem } from './grid';
 import { useDndDebug, useDndDebugListeners } from './grid';
+import { ActionSheet } from './ui/ActionSheet';
 import type { GridItem } from '../types';
 
 interface WidgetGridProps {
@@ -39,9 +40,18 @@ interface WidgetGridProps {
   isBatchMode?: boolean;
   batchSelectedIds?: Set<string>;
   onBatchSelectedIdsChange?: (next: Set<string>) => void;
+  isEditing?: boolean;
+  onEditingChange?: (editing: boolean) => void;
 }
 
-export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSelectedIdsChange }: WidgetGridProps) {
+export function WidgetGrid({
+  columns,
+  isBatchMode,
+  batchSelectedIds,
+  onBatchSelectedIdsChange,
+  isEditing = false,
+  onEditingChange,
+}: WidgetGridProps) {
   const {
     gridItems,
     updateGridItem,
@@ -51,18 +61,30 @@ export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSele
     currentFolderId,
     setCurrentFolderId,
     moveGridItemToFolder,
+    mergeFolders,
+    createFolderFromShortcuts,
     reorderGridItemsInCurrentScope,
     reorderGridItemsInFolderScope,
   } = useNewtabStore();
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeItemSnapshot, setActiveItemSnapshot] = useState<GridItem | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
   const [configItem, setConfigItem] = useState<GridItem | null>(null);
   const [openFolderId, setOpenFolderId] = useState<string | null>(null);
+  const [folderMergePrompt, setFolderMergePrompt] = useState<{
+    sourceId: string;
+    targetId: string;
+    sourceName: string;
+    targetName: string;
+  } | null>(null);
+  // 快捷方式碰撞创建文件夹的提示
+  const [shortcutMergePrompt, setShortcutMergePrompt] = useState<{
+    sourceId: string;
+    targetId: string;
+    sourceName: string;
+    targetName: string;
+  } | null>(null);
   const lastOverIdRef = useRef<string | null>(null);
-  const longPressTimerRef = useRef<number | null>(null);
-  const longPressStartPosRef = useRef<{ x: number; y: number } | null>(null);
 
   const { pushDndDebug } = useDndDebug();
   useDndDebugListeners(activeId, pushDndDebug);
@@ -209,7 +231,33 @@ export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSele
 
       const overItem = gridItems.find((item) => item.id === over.id);
       if (overItem?.type === 'bookmarkFolder') {
+        const activeItem = gridItems.find((item) => item.id === active.id);
+        
+        // 如果拖拽的也是文件夹，显示合并提示
+        if (activeItem?.type === 'bookmarkFolder') {
+          setFolderMergePrompt({
+            sourceId: String(active.id),
+            targetId: overItem.id,
+            sourceName: activeItem.bookmarkFolder?.title || '文件夹',
+            targetName: overItem.bookmarkFolder?.title || '文件夹',
+          });
+          return;
+        }
+        
+        // 否则移动到文件夹内
         moveGridItemToFolder(active.id as string, overItem.id);
+        return;
+      }
+
+      // 检测两个快捷方式碰撞，提示创建文件夹
+      const activeItem = gridItems.find((item) => item.id === active.id);
+      if (activeItem?.type === 'shortcut' && overItem?.type === 'shortcut') {
+        setShortcutMergePrompt({
+          sourceId: String(active.id),
+          targetId: String(over.id),
+          sourceName: activeItem.shortcut?.title || '快捷方式',
+          targetName: overItem.shortcut?.title || '快捷方式',
+        });
         return;
       }
 
@@ -218,42 +266,33 @@ export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSele
     [gridItems, moveGridItemToFolder, openFolder, pushDndDebug, reorderGridItemsInCurrentScope, reorderGridItemsInFolderScope]
   );
 
-  // 长按 2 秒切换编辑模式（进入/退出）
-  const clearLongPress = useCallback(() => {
-    if (longPressTimerRef.current) {
-      window.clearTimeout(longPressTimerRef.current);
-      longPressTimerRef.current = null;
-    }
-    longPressStartPosRef.current = null;
-  }, []);
+  // 处理文件夹合并
+  const handleMergeFolders = useCallback(() => {
+    if (!folderMergePrompt) return;
+    mergeFolders(folderMergePrompt.sourceId, folderMergePrompt.targetId);
+    setFolderMergePrompt(null);
+  }, [folderMergePrompt, mergeFolders]);
 
-  const handlePointerDownLongPress = useCallback(
-    (e: React.PointerEvent<HTMLDivElement>) => {
-      if (e.button !== 0) return; // 仅左键
-      // 正在拖拽时不触发
-      if (activeId) return;
-      clearLongPress();
-      longPressStartPosRef.current = { x: e.clientX, y: e.clientY };
-      longPressTimerRef.current = window.setTimeout(() => {
-        setIsEditing((prev) => !prev);
-        clearLongPress();
-      }, 2000);
-    },
-    [activeId, clearLongPress]
-  );
+  // 处理快捷方式合并创建文件夹
+  const handleCreateFolderFromShortcuts = useCallback(() => {
+    if (!shortcutMergePrompt) return;
+    createFolderFromShortcuts(shortcutMergePrompt.sourceId, shortcutMergePrompt.targetId);
+    setShortcutMergePrompt(null);
+  }, [shortcutMergePrompt, createFolderFromShortcuts]);
 
-  const handlePointerMoveLongPress = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if (!longPressStartPosRef.current) return;
-    const dx = e.clientX - longPressStartPosRef.current.x;
-    const dy = e.clientY - longPressStartPosRef.current.y;
-    if (Math.hypot(dx, dy) > 10) {
-      clearLongPress();
-    }
-  }, [clearLongPress]);
+  // 处理快捷方式重排序（不创建文件夹）
+  const handleReorderShortcuts = useCallback(() => {
+    if (!shortcutMergePrompt) return;
+    reorderGridItemsInCurrentScope(shortcutMergePrompt.sourceId, shortcutMergePrompt.targetId);
+    setShortcutMergePrompt(null);
+  }, [shortcutMergePrompt, reorderGridItemsInCurrentScope]);
 
-  const handlePointerUpLongPress = useCallback(() => {
-    clearLongPress();
-  }, [clearLongPress]);
+  // 处理文件夹移入（不合并）
+  const handleMoveToFolder = useCallback(() => {
+    if (!folderMergePrompt) return;
+    moveGridItemToFolder(folderMergePrompt.sourceId, folderMergePrompt.targetId);
+    setFolderMergePrompt(null);
+  }, [folderMergePrompt, moveGridItemToFolder]);
 
   const handleOpenFolder = useCallback((folderId: string) => {
     setOpenFolderId(folderId);
@@ -301,12 +340,7 @@ export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSele
         onDragEnd={handleDragEnd}
       >
         <SortableContext items={filteredItems.map((item) => item.id)} strategy={rectSortingStrategy}>
-          <div
-            className={`grid ${gridCols[columns]} gap-4 auto-rows-[80px]`}
-            onPointerDown={handlePointerDownLongPress}
-            onPointerMove={handlePointerMoveLongPress}
-            onPointerUp={handlePointerUpLongPress}
-          >
+          <div className={`grid ${gridCols[columns]} gap-4 auto-rows-[80px]`}>
             {filteredItems.map((item) => (
               <SortableGridItem
                 key={item.id}
@@ -366,6 +400,9 @@ export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSele
             isOpen
             onClose={() => setOpenFolderId(null)}
             onOpenFolder={handleOpenFolder}
+            isBatchMode={isBatchMode}
+            batchSelectedIds={batchSelectedIds}
+            onBatchSelectedIdsChange={onBatchSelectedIdsChange}
           />
         ) : null}
       </DndContext>
@@ -382,7 +419,7 @@ export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSele
 
       <div className="fixed bottom-6 right-6 z-40">
         <button
-          onClick={() => setIsEditing(!isEditing)}
+          onClick={() => onEditingChange?.(!isEditing)}
           className={`p-3 rounded-full shadow-lg transition-all ${
             isEditing
               ? 'bg-green-500 hover:bg-green-600 text-white'
@@ -398,11 +435,6 @@ export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSele
         </button>
       </div>
 
-      {isEditing && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-full glass text-sm text-white/80 animate-fadeIn">
-          拖拽调整位置 · 双击配置组件 · 点击 ✓ 完成 · 长按2秒可退出
-        </div>
-      )}
       {isBatchMode && (
         <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-full glass text-sm text-white/80 animate-fadeIn">
           <button
@@ -421,6 +453,42 @@ export function WidgetGrid({ columns, isBatchMode, batchSelectedIds, onBatchSele
           </button>
         </div>
       )}
+
+      {/* 文件夹合并/移入选择弹窗 */}
+      <ActionSheet
+        isOpen={!!folderMergePrompt}
+        title="文件夹操作"
+        message={`将「${folderMergePrompt?.sourceName}」拖到了「${folderMergePrompt?.targetName}」上`}
+        actions={[
+          {
+            label: '合并文件夹',
+            onClick: handleMergeFolders,
+          },
+          {
+            label: '移入文件夹',
+            onClick: handleMoveToFolder,
+          },
+        ]}
+        onCancel={() => setFolderMergePrompt(null)}
+      />
+
+      {/* 快捷方式合并创建文件夹弹窗 */}
+      <ActionSheet
+        isOpen={!!shortcutMergePrompt}
+        title="创建文件夹"
+        message={`将「${shortcutMergePrompt?.sourceName}」拖到了「${shortcutMergePrompt?.targetName}」上`}
+        actions={[
+          {
+            label: '合并为文件夹',
+            onClick: handleCreateFolderFromShortcuts,
+          },
+          {
+            label: '仅调整顺序',
+            onClick: handleReorderShortcuts,
+          },
+        ]}
+        onCancel={() => setShortcutMergePrompt(null)}
+      />
     </>
   );
 }

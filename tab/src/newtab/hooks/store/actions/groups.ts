@@ -129,11 +129,15 @@ export function createGroupActions(
         .filter((g) => g.id !== id)
         .map((group, index) => ({ ...group, position: index }));
 
+      // 如果当前激活的分组被删除，同时重置 currentFolderId
+      const shouldResetCurrentFolder = activeGroupId === id;
+
       set({
         shortcutGroups: filtered,
         shortcuts: updatedShortcuts,
         gridItems: updatedGridItems,
         activeGroupId: activeGroupId === id ? 'home' : activeGroupId,
+        ...(shouldResetCurrentFolder ? { currentFolderId: null } : {}),
       });
       saveData();
       debouncedSync({
@@ -218,10 +222,13 @@ export function createGroupActions(
 
       // 如果当前激活的分组被删除，切换到首页
       const newActiveGroupId = emptyGroupIds.includes(activeGroupId ?? '') ? 'home' : activeGroupId;
+      // 如果激活分组被删除，同时重置 currentFolderId
+      const shouldResetCurrentFolder = emptyGroupIds.includes(activeGroupId ?? '');
 
       set({
         shortcutGroups: filtered,
         activeGroupId: newActiveGroupId,
+        ...(shouldResetCurrentFolder ? { currentFolderId: null } : {}),
       });
       saveData();
       debouncedSync({

@@ -12,10 +12,11 @@ import {
   type NewTabState,
   hasBookmarksApi,
   isHomeRootItem,
-  ensureHomeFolder,
   getWritableRootBookmarkId,
   debouncedSync,
 } from './store';
+
+import { ensureHomeFolder } from '../features/browser-sync';
 
 import { createShortcutActions } from './store/actions/shortcuts';
 import { createGroupActions } from './store/actions/groups';
@@ -24,7 +25,7 @@ import { createGridItemActions } from './store/actions/grid-items';
 import { createBrowserBookmarkActions } from './store/actions/browser-bookmarks';
 import { createNavigationActions } from './store/actions/navigation';
 
-export { ensureHomeFolder } from './store';
+export { ensureHomeFolder } from '../features/browser-sync';
 
 export const useNewtabStore = create<NewTabState>((set, get) => {
   // ============================================

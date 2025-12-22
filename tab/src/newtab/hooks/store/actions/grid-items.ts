@@ -40,13 +40,22 @@ export function createGridItemActions(
       const meta = getWidgetMeta(type);
       const defaultConfig = getDefaultWidgetConfig(type);
 
+      const targetGroupId = options.groupId ?? activeGroupId ?? 'home';
+      const targetParentId = (options.parentId ?? currentFolderId) ?? null;
+
+      // 计算同 scope 内的最大 position
+      const scopeItems = gridItems.filter(
+        (item) => (item.groupId ?? 'home') === targetGroupId && (item.parentId ?? null) === targetParentId
+      );
+      const maxPosition = scopeItems.length > 0 ? Math.max(...scopeItems.map((i) => i.position)) : -1;
+
       const newItem: GridItem = {
         id: generateId(),
         type,
         size: options.size || meta.sizeConfig.defaultSize,
-        position: gridItems.length,
-        groupId: options.groupId ?? activeGroupId ?? undefined,
-        parentId: (options.parentId ?? currentFolderId) ?? undefined,
+        position: maxPosition + 1,
+        groupId: targetGroupId,
+        parentId: targetParentId ?? undefined,
         shortcut: options.shortcut,
         bookmarkFolder: options.bookmarkFolder,
         config: type !== 'shortcut' ? defaultConfig : undefined,
@@ -179,10 +188,10 @@ export function createGridItemActions(
       }
 
       const filtered = gridItems.filter((item) => !toDelete.has(item.id));
-      const targetGroupId = target.groupId;
+      const targetGroupId = target.groupId ?? 'home';
       const targetParentId = target.parentId ?? null;
       const siblings = filtered
-        .filter((item) => item.groupId === targetGroupId && (item.parentId ?? null) === targetParentId)
+        .filter((item) => (item.groupId ?? 'home') === targetGroupId && (item.parentId ?? null) === targetParentId)
         .sort((a, b) => a.position - b.position);
 
       const siblingPosById = new Map(siblings.map((item, index) => [item.id, index] as const));
@@ -226,6 +235,9 @@ export function createGridItemActions(
           })();
         }
       }
+
+      // 清理空分组
+      get().cleanupEmptyGroups();
     },
 
     removeGridFolder: (id, mode) => {
@@ -238,7 +250,7 @@ export function createGridItemActions(
         return;
       }
 
-      const targetGroupId = target.groupId;
+      const targetGroupId = target.groupId ?? 'home';
       const targetParentId = target.parentId ?? null;
 
       const foldersToFlatten = new Set<string>([id]);
@@ -260,7 +272,7 @@ export function createGridItemActions(
       const filtered = gridItems.filter((item) => !foldersToFlatten.has(item.id));
 
       const existingSiblings = filtered
-        .filter((item) => item.groupId === targetGroupId && (item.parentId ?? null) === targetParentId)
+        .filter((item) => (item.groupId ?? 'home') === targetGroupId && (item.parentId ?? null) === targetParentId)
         .sort((a, b) => a.position - b.position);
 
       const movedToParent = new Map(
@@ -276,7 +288,7 @@ export function createGridItemActions(
       });
 
       const scopeItems = moved
-        .filter((item) => item.groupId === targetGroupId && (item.parentId ?? null) === targetParentId)
+        .filter((item) => (item.groupId ?? 'home') === targetGroupId && (item.parentId ?? null) === targetParentId)
         .sort((a, b) => a.position - b.position);
       const posById = new Map(scopeItems.map((item, index) => [item.id, index] as const));
       const reordered = moved.map((item) => {
@@ -308,6 +320,9 @@ export function createGridItemActions(
           } catch {}
         })();
       }
+
+      // 清理空分组
+      get().cleanupEmptyGroups();
     },
 
     reorderGridItems: (fromIndex, toIndex) => {
@@ -331,7 +346,8 @@ export function createGridItemActions(
       if (!currentFolderId) {
         return gridItems
           .filter((item) => {
-            const inGroup = item.groupId === targetGroupId;
+            const itemGroupId = item.groupId ?? 'home';
+            const inGroup = itemGroupId === targetGroupId;
             const inFolder = (item.parentId ?? null) === null;
             return inGroup && inFolder;
           })
@@ -349,7 +365,8 @@ export function createGridItemActions(
 
       return gridItems
         .filter((item) => {
-          const inGroup = item.groupId === targetGroupId;
+          const itemGroupId = item.groupId ?? 'home';
+          const inGroup = itemGroupId === targetGroupId;
           const inFolder = (item.parentId ?? null) === (currentFolderId ?? null);
           return inGroup && inFolder;
         })

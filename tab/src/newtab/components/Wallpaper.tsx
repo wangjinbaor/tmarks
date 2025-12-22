@@ -183,7 +183,7 @@ export function Wallpaper({ config, onRefresh }: WallpaperProps) {
   const url = config.type === 'bing' || config.type === 'unsplash' ? imageUrl : config.value;
 
   if (!url) {
-    return <div className="absolute inset-0 z-0 bg-[#1a1a2e]" />;
+    return <div className="absolute inset-0 z-0" style={{ backgroundColor: 'var(--background)' }} />;
   }
 
   return (

@@ -40,11 +40,13 @@ function SortableBookmarkItem({
   isHovered, 
   onHover,
   wasDragged,
+  onRecordClick,
 }: {
   bookmark: TMarksBookmark;
   isHovered: boolean;
   onHover: (id: string | null) => void;
   wasDragged: boolean;
+  onRecordClick: (id: string) => void;
 }) {
   const {
     attributes,
@@ -82,6 +84,9 @@ function SortableBookmarkItem({
           // 如果正在拖拽或刚拖拽完，阻止跳转
           if (isDragging || wasDragged) {
             e.preventDefault();
+          } else {
+            // 记录点击次数
+            onRecordClick(bookmark.id);
           }
         }}
       >
@@ -120,7 +125,7 @@ function SortableBookmarkItem({
 }
 
 export function DockBar() {
-  const { syncState, pinnedBookmarks, fetchPinnedBookmarks, reorderPinnedBookmarks } = useTMarksSync();
+  const { syncState, pinnedBookmarks, fetchPinnedBookmarks, reorderPinnedBookmarks, recordBookmarkClick } = useTMarksSync();
   const [hasLoaded, setHasLoaded] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -229,6 +234,7 @@ export function DockBar() {
                 isHovered={hoveredId === bookmark.id}
                 onHover={setHoveredId}
                 wasDragged={wasDragged}
+                onRecordClick={recordBookmarkClick}
               />
             ))}
           </div>

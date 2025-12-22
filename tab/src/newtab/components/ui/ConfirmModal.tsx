@@ -77,19 +77,30 @@ export function ConfirmModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* iOS 风格毛玻璃背景 */}
-        <div className="bg-[#2c2c2e]/90 backdrop-blur-xl">
+        <div
+          className="backdrop-blur-xl"
+          style={{ backgroundColor: 'var(--ios-sheet-bg)' }}
+        >
           {/* 标题和消息 */}
           <div className="px-4 pt-5 pb-4 text-center">
-            <h3 id="confirm-title" className="text-[17px] font-semibold text-white mb-1">
+            <h3
+              id="confirm-title"
+              className="text-[17px] font-semibold mb-1"
+              style={{ color: 'var(--ios-text-primary)' }}
+            >
               {title}
             </h3>
-            <p id="confirm-message" className="text-[13px] text-white/70 leading-relaxed">
+            <p
+              id="confirm-message"
+              className="text-[13px] leading-relaxed"
+              style={{ color: 'var(--ios-text-secondary)' }}
+            >
               {message}
             </p>
           </div>
 
           {/* 分隔线 */}
-          <div className="h-px bg-white/10" />
+          <div className="h-px" style={{ backgroundColor: 'var(--ios-divider)' }} />
 
           {/* 按钮区域 - iOS 风格水平排列 */}
           <div className="flex">
@@ -97,18 +108,24 @@ export function ConfirmModal({
               type="button"
               onClick={handleCancel}
               aria-label={cancelText}
-              className="flex-1 py-[11px] text-[17px] font-normal text-[#0a84ff] hover:bg-white/5 active:bg-white/10 transition-colors focus:outline-none focus:bg-white/10"
+              className="flex-1 py-[11px] text-[17px] font-normal transition-colors focus:outline-none"
+              style={{ color: 'var(--ios-action-primary)' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ios-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               {cancelText}
             </button>
-            <div className="w-px bg-white/10" />
+            <div className="w-px" style={{ backgroundColor: 'var(--ios-divider)' }} />
             <button
               type="button"
               onClick={handleConfirm}
               aria-label={confirmText}
-              className={`flex-1 py-[11px] text-[17px] font-semibold hover:bg-white/5 active:bg-white/10 transition-colors focus:outline-none focus:bg-white/10 ${
-                confirmVariant === 'danger' ? 'text-[#ff453a]' : 'text-[#0a84ff]'
-              }`}
+              className="flex-1 py-[11px] text-[17px] font-semibold transition-colors focus:outline-none"
+              style={{
+                color: confirmVariant === 'danger' ? 'var(--ios-action-danger)' : 'var(--ios-action-primary)',
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ios-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               {confirmText}
             </button>

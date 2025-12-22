@@ -78,23 +78,32 @@ export function ActionSheet({
         onClick={(e) => e.stopPropagation()}
       >
         {/* 主操作区域 */}
-        <div className="bg-[#2c2c2e]/95 backdrop-blur-xl rounded-[14px] overflow-hidden mb-2">
+        <div
+          className="backdrop-blur-xl rounded-[14px] overflow-hidden mb-2"
+          style={{ backgroundColor: 'var(--ios-sheet-bg)' }}
+        >
           {/* 标题和消息 */}
           {(title || message) && (
             <>
               <div className="px-4 py-4 text-center">
                 {title && (
-                  <h3 className="text-[13px] font-semibold text-white/60 mb-0.5">
+                  <h3
+                    className="text-[13px] font-semibold mb-0.5"
+                    style={{ color: 'var(--ios-text-muted)' }}
+                  >
                     {title}
                   </h3>
                 )}
                 {message && (
-                  <p className="text-[13px] text-white/50 leading-relaxed">
+                  <p
+                    className="text-[13px] leading-relaxed"
+                    style={{ color: 'var(--ios-text-muted)' }}
+                  >
                     {message}
                   </p>
                 )}
               </div>
-              <div className="h-px bg-white/10" />
+              <div className="h-px" style={{ backgroundColor: 'var(--ios-divider)' }} />
             </>
           )}
 
@@ -104,24 +113,35 @@ export function ActionSheet({
               <button
                 type="button"
                 onClick={() => handleAction(action)}
-                className={`w-full py-[18px] text-[20px] font-normal hover:bg-white/5 active:bg-white/10 transition-colors ${
-                  action.variant === 'danger' ? 'text-[#ff453a]' : 'text-[#0a84ff]'
-                }`}
+                className="w-full py-[18px] text-[20px] font-normal transition-colors"
+                style={{
+                  color: action.variant === 'danger' ? 'var(--ios-action-danger)' : 'var(--ios-action-primary)',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ios-hover)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
                 {action.label}
               </button>
-              {index < actions.length - 1 && <div className="h-px bg-white/10" />}
+              {index < actions.length - 1 && (
+                <div className="h-px" style={{ backgroundColor: 'var(--ios-divider)' }} />
+              )}
             </div>
           ))}
         </div>
 
         {/* 取消按钮 - 独立卡片 */}
-        <div className="bg-[#2c2c2e]/95 backdrop-blur-xl rounded-[14px] overflow-hidden">
+        <div
+          className="backdrop-blur-xl rounded-[14px] overflow-hidden"
+          style={{ backgroundColor: 'var(--ios-sheet-bg)' }}
+        >
           <button
             type="button"
             onClick={handleCancel}
             aria-label={cancelText}
-            className="w-full py-[18px] text-[20px] font-semibold text-[#0a84ff] hover:bg-white/5 active:bg-white/10 transition-colors focus:outline-none focus:bg-white/10"
+            className="w-full py-[18px] text-[20px] font-semibold transition-colors focus:outline-none"
+            style={{ color: 'var(--ios-action-primary)' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ios-hover)'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
             {cancelText}
           </button>

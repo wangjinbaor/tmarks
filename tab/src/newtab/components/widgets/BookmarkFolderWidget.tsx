@@ -174,15 +174,15 @@ export const BookmarkFolderWidget = memo(function BookmarkFolderWidget({
         <div className="glass-refraction" />
 
         {isBatchMode && (
-          <div className="absolute top-1.5 right-1.5 z-30">
+          <div className="absolute top-1 right-1 z-30">
             {isSelected ? (
-              <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
-                <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-3.5 h-3.5 rounded-full bg-blue-500 flex items-center justify-center">
+                <svg className="w-2 h-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
             ) : (
-              <div className="w-5 h-5 rounded-full border border-white/40 bg-black/20" />
+              <div className="w-3.5 h-3.5 rounded-full border border-white/40 bg-black/20" />
             )}
           </div>
         )}
