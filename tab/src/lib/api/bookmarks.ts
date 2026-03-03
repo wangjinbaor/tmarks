@@ -234,7 +234,7 @@ export class BookmarksAPI extends TMarksClient {
 
   /**
    * 批量创建书签
-   * POST /api/tab/bookmarks/batch
+   * POST /api/tab/bookmarks (with bookmarks array)
    */
   async batchCreateBookmarks(bookmarks: CreateBookmarkInput[]): Promise<{
     data: {
@@ -255,6 +255,6 @@ export class BookmarksAPI extends TMarksClient {
         errors?: Array<{ index: number; url: string; error: string }>;
         created_bookmarks: Array<{ id: string; url: string; title: string }>;
       };
-    }>('/tab/bookmarks/batch', { bookmarks });
+    }>('/tab/bookmarks', { bookmarks });
   }
 }
