@@ -1,6 +1,6 @@
 {
   "name": "aitmarks",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "智能书签管理浏览器扩展 - 支持AI标签推荐、标签页组管理、多浏览器兼容",
   "main": "index.js",
   "scripts": {

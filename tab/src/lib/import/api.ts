@@ -35,7 +35,7 @@ export async function importToTMarks(
 
   // 规范化 URL
   const baseUrl = tmarksUrl.replace(/\/+$/, '')
-  const batchApiUrl = `${baseUrl}/api/tab/bookmarks`
+  const batchApiUrl = `${baseUrl}/api/tab/bookmarks/batch` // 使用专用的批量端点
 
   // 分批处理书签
   for (let i = 0; i < bookmarks.length; i += BATCH_SIZE) {
